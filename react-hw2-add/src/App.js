@@ -1,18 +1,36 @@
-import React, {useEffect, useState} from "react";
 
+
+import React, { useEffect, useState } from "react";
 import './App.css';
-import {Users} from "./component/Users/Users";
-import {PostsUsers} from "./component/PostsUsers/PostsUsers";
-// import {PostsUsers} from "./component/PostsUsers/PostsUsers";
-// import {User} from "./component/User/User";
 
+import { getUsers } from "./api/getUsers";
+import {UsersG} from "./component/UsersG";
+import {Posts} from "./component/Posts";
 
 function App() {
+
+     const [user,setUser]=useState([])
+     const [userId, setUserId] = useState(null);
+
+    useEffect(() => {
+        getUsers().then(value => setUser(value))
+    },[])
+
+
   return (
-    <div className={'App'}>
-<Users/>
-       <PostsUsers/>
-    </div>
+      <div className="App">
+          {!!user.length && <UsersG users={user}
+                                    setPostId={setUserId}
+          />}
+
+        {/*<hr/>*/}
+          {!!userId && <Posts id={userId} /> }
+
+
+
+      </div>
+
+
   );
 }
 
